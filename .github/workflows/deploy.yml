@@ -34,11 +34,19 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify Vite output
+        run: |
+          test -f dist/index.html
+          grep -q "/admin_dashboard/assets/" dist/index.html
+          test -d dist/assets
+          echo "Vite production build verified:"
+          cat dist/index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload build
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
